@@ -1,4 +1,18 @@
+using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<
+    IAuthorizationMiddlewareResultHandler, CustomAuthorizationMiddlewareResultHandler>();
+
+builder.Services
+    .AddAuth0WebAppAuthentication(options => {
+      options.Domain = builder.Configuration["Auth0:Domain"];
+      options.ClientId = builder.Configuration["Auth0:ClientId"];
+      options.Scope = "openid profile email";
+      options.CallbackPath = "/auth0callback"; // This will need to be added to your application's Allowed Callback URLs in Auth0.
+    });
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -18,6 +32,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
