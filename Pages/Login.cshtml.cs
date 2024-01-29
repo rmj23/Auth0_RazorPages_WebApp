@@ -9,12 +9,12 @@ namespace Auth0_RazorPages_WebApp.Pages
     {
         public async Task OnGet(string returnUrl = "/")
         {
-            // This will trigger the Auth0 login page
             var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
                 .WithRedirectUri(returnUrl)
                 .Build();
 
-                await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+            // This will trigger the Auth0 login page
+            await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
         }
     }
 }

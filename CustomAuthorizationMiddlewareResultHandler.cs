@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 
-// This handles all authorization of the application. This gets called on pages that have the [Authorize]
+namespace Auth0_RazorPages_WebApp;
+
+// This handles all authorization of the application. This gets called on all pages that have the [Authorize]
 public class CustomAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
 {
     private readonly AuthorizationMiddlewareResultHandler defaultHandler = new();
@@ -21,5 +23,3 @@ public class CustomAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewa
         await defaultHandler.HandleAsync(next, context, policy, authorizeResult);
     }
 }
-
-public class Show404Requirement : IAuthorizationRequirement { }
